@@ -1,15 +1,24 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, TextInput, Button, StyleSheet } from 'react-native'
 
 export const AddTodo = ({ onSubmit }) => {
+  const [value, setValue] = useState('')
 
   const pressHandler = () => {
-    onSubmit('test todo')
+    if (value.trim()) {
+      onSubmit(value)
+      setValue('')
+    }
   }
 
   return (
     <View style={styles.wrapper}>
-      <TextInput style={styles.input} />
+      <TextInput
+        style={styles.input}
+        onChangeText={setValue}
+        value={value}
+        placeholder="Введите название"
+      />
       <Button title="Добавить" onPress={pressHandler} />
     </View>
   )
@@ -18,7 +27,8 @@ export const AddTodo = ({ onSubmit }) => {
 const styles = StyleSheet.create({
   wrapper: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 15
   },
 
   input: {
