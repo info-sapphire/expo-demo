@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, FlatList } from 'react-native'
 import { AddTodo } from './src/AddTodo'
 import { Navbar } from './src/Navbar'
 import { Todo } from './src/Todo'
@@ -23,9 +23,11 @@ export default function App() {
       <View style={styles.container}>
         <AddTodo onSubmit={addTodo} />
 
-        <View>
-          {todos.map(todo => <Todo key={todo.id} todo={todo} />)}
-        </View>
+        <FlatList 
+          data={todos}
+          renderItem={({ item }) => <Todo todo={item} />}
+          keyExtractor={item => item.id}
+        />
       </View>
     </View>
   )
