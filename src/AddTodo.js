@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, TextInput, Button, StyleSheet } from 'react-native'
+import { View, TextInput, Button, Alert, StyleSheet } from 'react-native'
 
 export const AddTodo = ({ onSubmit }) => {
   const [value, setValue] = useState('')
@@ -8,6 +8,8 @@ export const AddTodo = ({ onSubmit }) => {
     if (value.trim()) {
       onSubmit(value)
       setValue('')
+    } else {
+      Alert.alert('Название не должно быть пустым')
     }
   }
 
@@ -35,6 +37,8 @@ const styles = StyleSheet.create({
     flex: 1,
     borderStyle: 'solid',
     borderBottomWidth: 2,
-    borderBottomColor: '#3949ab'
+    borderBottomColor: '#3949ab',
+    paddingBottom: 10,
+    paddingTop: 10
   }
 })
