@@ -22,9 +22,13 @@ export default function App() {
     setTodos(prev => prev.filter(todo => todo.id !== id))
   }
 
+  const toHome = () => setTodoId(null)
+  const openTodo = id => setTodoId(id)
+  const currentTodo = todos.find(todo => todo.id === todoId)
+
   const content = todoId
-  ? <TodoScreen />
-  : <MainScreen {...{ todos, addTodo, removeTodo }} />
+  ? <TodoScreen todo={currentTodo} goBack={toHome} />
+  : <MainScreen {...{ todos, addTodo, removeTodo, openTodo }} />
 
   return (
     <View>
