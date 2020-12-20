@@ -1,12 +1,24 @@
-import React from 'react'
-import { Modal, View, TextInput, Button, StyleSheet } from 'react-native'
+import React, { useState } from 'react'
+import { Modal, View, TextInput, Button, StyleSheet, Alert } from 'react-native'
 import { THEME } from '../theme'
 
-export const EditModal = ({ visible, onCancel }) => {
+export const EditModal = ({ value, visible, onCancel, onSave }) => {
+  const [title, setTitle] = useState(value)
+
+  const saveHandler = () => {
+    if (title.trim().length < 3) {
+      Alert.alert('Ошибка', 'Минимальная длина названия 3 символа')
+    } else {
+      onSave(title)
+    }
+  }
+
   return (
     <Modal animationType="fade" visible={visible} transparent={false}>
       <View style={styles.wrapper}>
         <TextInput
+          value={title}
+          onChangeText={setTitle}
           style={styles.input}
           placeholder="Введите название"
           autoCapitalize="none"
@@ -18,7 +30,7 @@ export const EditModal = ({ visible, onCancel }) => {
             onPress={onCancel}
             color={THEME.DANGER_COLOR}
           />
-          <Button title="Сохранить" />
+          <Button title="Сохранить" onPress={saveHandler} />
         </View>
       </View>
     </Modal>

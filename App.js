@@ -20,22 +20,31 @@ export default function App() {
 
   const removeTodo = id => {
     const { title } = todos.find(todo => todo.id === id)
-    
+
     Alert.alert(
       'Удаление элемента',
       `Вы уверены что хотите удалить ${title}`,
       [
         { text: 'Отмена', style: 'cancel' },
-        { 
-          text: 'Удалить', 
-          style: 'destructive', 
+        {
+          text: 'Удалить',
+          style: 'destructive',
           onPress: () => {
             toHome()
             setTodos(prev => prev.filter(todo => todo.id !== id))
-          } 
+          }
         }
       ],
       { cancelable: false }
+    )
+  }
+
+  const updateTodo = (id, title) => {
+    setTodos(prev =>
+      prev.map(todo => ({
+        title: todo.id === id ? title : todo.title,
+        id
+      }))
     )
   }
 
@@ -43,16 +52,21 @@ export default function App() {
   const openTodo = id => setTodoId(id)
   const currentTodo = todos.find(todo => todo.id === todoId)
 
-  const content = todoId
-  ? <TodoScreen todo={currentTodo} goBack={toHome} onRemove={removeTodo} />
-  : <MainScreen {...{ todos, addTodo, removeTodo, openTodo }} />
+  const content = todoId ? (
+    <TodoScreen
+      todo={currentTodo}
+      goBack={toHome}
+      onRemove={removeTodo}
+      onSave={updateTodo}
+    />
+  ) : (
+    <MainScreen {...{ todos, addTodo, removeTodo, openTodo }} />
+  )
 
   return (
     <View>
       <Navbar title="Todo App" />
-      <View style={styles.container}>
-        {content}
-      </View>
+      <View style={styles.container}>{content}</View>
     </View>
   )
 }
