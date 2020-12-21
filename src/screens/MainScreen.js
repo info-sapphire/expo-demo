@@ -27,13 +27,15 @@ export const MainScreen = ({ addTodo, todos, removeTodo, openTodo }) => {
 
   const content =
     todos.length > 0 ? (
-      <FlatList
-        data={todos}
-        renderItem={({ item }) => (
-          <Todo todo={item} onRemove={removeTodo} onOpen={openTodo} />
-        )}
-        keyExtractor={item => item.id}
-      />
+      <View style={{ width: deviceWidth }}>
+        <FlatList
+          data={todos}
+          renderItem={({ item }) => (
+            <Todo todo={item} onRemove={removeTodo} onOpen={openTodo} />
+          )}
+          keyExtractor={item => item.id}
+        />
+      </View>
     ) : (
       <View style={styles.imageWrapper}>
         <Image
