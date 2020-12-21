@@ -1,10 +1,30 @@
-import React from 'react'
-import { View, FlatList, Image, StyleSheet } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, Dimensions, FlatList, Image, StyleSheet } from 'react-native'
 
 import { AddTodo } from '../components/AddTodo'
 import { Todo } from '../components/Todo'
+import { THEME } from '../theme'
 
 export const MainScreen = ({ addTodo, todos, removeTodo, openTodo }) => {
+  const [deviceWidth, setDeviceWidth] = useState(
+    Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2
+  )
+
+  // выполнится один раз при инициализации т.к нет зависимостей, аналогично mounted
+  useEffect(() => {
+    const update = () => {
+      setDeviceWidth(
+        Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2
+      )
+    }
+
+    Dimensions.addEventListener('change', update)
+
+    return () => {
+      Dimensions.removeEventListener('change', update)
+    }
+  })
+
   const content =
     todos.length > 0 ? (
       <FlatList

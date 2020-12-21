@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Dimensions } from 'react-native'
 import { FontAwesome, AntDesign } from '@expo/vector-icons'
 
 import { EditModal } from '../components/EditModal'
@@ -73,6 +73,8 @@ const styles = StyleSheet.create({
 
   button: {
     flex: 1
+    // width: Dimensions.get('window').width / 3
+    // width: Dimensions.get('window').width > 400 ? 150 : 200
   },
 
   buttons: {
