@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, TextInput, Alert, StyleSheet } from 'react-native'
+import { View, TextInput, Alert, Keyboard, StyleSheet } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 
 export const AddTodo = ({ onSubmit }) => {
@@ -9,6 +9,7 @@ export const AddTodo = ({ onSubmit }) => {
     if (value.trim()) {
       onSubmit(value)
       setValue('')
+      Keyboard.dismiss()
     } else {
       Alert.alert('Название не должно быть пустым')
     }
