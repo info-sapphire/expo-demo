@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Modal, View, TextInput, Button, StyleSheet, Alert } from 'react-native'
+
 import { THEME } from '../theme'
 
 export const EditModal = ({ value, visible, onCancel, onSave }) => {

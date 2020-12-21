@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import { View, Button, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
+
 import { EditModal } from '../components/EditModal'
+import { AppButton } from '../components/uikit/AppButton'
 import { AppCard } from '../components/uikit/AppCard'
 import { AppText } from '../components/uikit/AppText'
 import { THEME } from '../theme'
@@ -23,20 +25,25 @@ export const TodoScreen = ({ goBack, todo, onRemove, onSave }) => {
       />
 
       <AppCard style={styles.card}>
-        <AppText style={styles.text} bold={true}>{todo.title}</AppText>
-        <Button title="Редактировать" onPress={() => setModal(true)} />
+        <AppText style={styles.text} bold={true}>
+          {todo.title}
+        </AppText>
+        <AppButton onPress={() => setModal(true)}>Редактировать</AppButton>
       </AppCard>
 
       <View style={styles.buttons}>
-        <View style={styles.button}>
-          <Button title="Назад" color={THEME.GRAY_COLOR} onPress={goBack} />
+        <View style={{ ...styles.button, ...styles.marginRight }}>
+          <AppButton onPress={goBack} color={THEME.GRAY_COLOR}>
+            Назад
+          </AppButton>
         </View>
-        <View style={styles.button}>
-          <Button
-            title="Удалить"
-            color={THEME.DANGER_COLOR}
+        <View style={{ ...styles.button, ...styles.marginLeft }}>
+          <AppButton
             onPress={() => onRemove(todo.id)}
-          />
+            color={THEME.DANGER_COLOR}
+          >
+            Удалить
+          </AppButton>
         </View>
       </View>
     </View>
@@ -52,6 +59,14 @@ const styles = StyleSheet.create({
   },
 
   text: {},
+
+  marginRight: {
+    marginRight: 10
+  },
+
+  marginLeft: {
+    marginLeft: 10
+  },
 
   button: {
     flex: 1
