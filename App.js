@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { Alert, StyleSheet, View } from 'react-native'
+import * as Font from 'expo-font'
+import AppLoading from 'expo-app-loading'
+
 import { Navbar } from './src/components/Navbar'
 import { MainScreen } from './src/screens/MainScreen'
 import { TodoScreen } from './src/screens/TodoScreen'
-import * as Font from 'expo-font'
 
 const appLoad = async () => {
   await Font.loadAsync({
@@ -13,8 +15,19 @@ const appLoad = async () => {
 }
 
 export default function App() {
+  const [isReady, setIsReady] = useState(false)
   const [todos, setTodos] = useState([])
   const [todoId, setTodoId] = useState(null)
+
+  if (!isReady) {
+    return (
+      <AppLoading
+        startAsync={appLoad}
+        onError={() => console.error('onError')}
+        onFinish={() => setIsReady(true)}
+      />
+    )
+  }
 
   const addTodo = title => {
     setTodos(prev => [

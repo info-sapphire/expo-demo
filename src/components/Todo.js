@@ -1,5 +1,6 @@
 import React from 'react'
-import { Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
+import { AppText } from './uikit/AppText'
 
 export const Todo = ({ todo, onRemove, onOpen }) => {
   return (
@@ -9,7 +10,7 @@ export const Todo = ({ todo, onRemove, onOpen }) => {
       onPress={() => onOpen(todo.id)}
       onLongPress={() => onRemove(todo.id)}
     >
-      <Text>{todo.title}</Text>
+      <AppText style={styles.title}>{todo.title}</AppText>
     </TouchableOpacity>
   )
 }
@@ -23,5 +24,9 @@ const styles = StyleSheet.create({
     borderColor: '#eee',
     borderRadius: 5,
     marginBottom: 10
+  },
+
+  title: {
+    fontFamily: 'roboto-bold'
   }
 })

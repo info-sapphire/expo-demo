@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { View, Text, Button, StyleSheet } from 'react-native'
+import { View, Button, StyleSheet } from 'react-native'
 import { EditModal } from '../components/EditModal'
 import { AppCard } from '../components/uikit/AppCard'
+import { AppText } from '../components/uikit/AppText'
 import { THEME } from '../theme'
 
 export const TodoScreen = ({ goBack, todo, onRemove, onSave }) => {
@@ -22,7 +23,7 @@ export const TodoScreen = ({ goBack, todo, onRemove, onSave }) => {
       />
 
       <AppCard style={styles.card}>
-        <Text style={styles.text}>{todo.title}</Text>
+        <AppText style={styles.text} bold={true}>{todo.title}</AppText>
         <Button title="Редактировать" onPress={() => setModal(true)} />
       </AppCard>
 
