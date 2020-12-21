@@ -21,11 +21,14 @@ export default function App() {
 
   if (!isReady) {
     return (
-      <AppLoading
-        startAsync={appLoad}
-        onError={() => console.error('onError')}
-        onFinish={() => setIsReady(true)}
-      />
+      <View>
+        <AppLoading
+          startAsync={appLoad}
+          onError={() => console.error('onError')}
+          onFinish={() => setIsReady(true)}
+          autoHideSplash
+        />
+      </View>
     )
   }
 

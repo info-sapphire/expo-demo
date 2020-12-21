@@ -32,6 +32,6 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    color: '#ffffff'
+    color: '#fff'
   }
 })
