@@ -5,6 +5,7 @@ import { AddTodo } from '../components/AddTodo'
 import { Todo } from '../components/Todo'
 import { AppButton } from '../components/uikit/AppButton'
 import { AppLoader } from '../components/uikit/AppLoader'
+import { AppText } from '../components/uikit/AppText'
 import { ScreenContext } from '../context/screen/screenContext'
 import { TodoContext } from '../context/todo/todoContext'
 import { THEME } from '../theme'
@@ -48,7 +49,9 @@ export const MainScreen = () => {
     return (
       <View style={styles.errorWrapper}>
         <AppText style={styles.errorText}>{error}</AppText>
-        <AppButton onPress={loadTodos}>Повторить</AppButton>
+        <AppButton style={styles.errorButton} onPress={loadTodos}>
+          Повторить
+        </AppButton>
       </View>
     )
   }
@@ -91,8 +94,12 @@ const styles = StyleSheet.create({
   },
 
   errorText: {
-    fontSize: 20,
+    fontSize: 16,
     color: THEME.DANGER_COLOR
+  },
+
+  errorButton: {
+    marginTop: 10
   },
 
   imageWrapper: {

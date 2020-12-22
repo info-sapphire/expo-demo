@@ -14,6 +14,7 @@ import {
   CLEAR_ERROR,
   FETCH_TODOS
 } from '../types'
+import { Http } from '../../http'
 
 export const TodoState = ({ children }) => {
   const initialState = {
@@ -29,15 +30,12 @@ export const TodoState = ({ children }) => {
       showLoader()
       clearError()
 
-      const response = await fetch(
+      const {
+        name: id
+      } = await Http.post(
         'https://react-hooks-735b2.firebaseio.com/todos.json',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title })
-        }
+        { title }
       )
-      const { name: id } = await response.json()
 
       dispatch({ type: ADD_TODO, id, title })
     } catch (error) {
@@ -54,23 +52,17 @@ export const TodoState = ({ children }) => {
       showLoader()
       clearError()
 
-      const response = await fetch(
-        'https://react-hooks-735b2.firebaseio.com/todos.json',
-        {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
-        }
+      const response = await Http.get(
+        'https://react-hooks-735b2.firebaseio.com/todos.json'
       )
-
-      const responseData = await response.json()
 
       dispatch({
         type: FETCH_TODOS,
         todos:
-          responseData === null
+          response === null
             ? []
-            : Object.keys(responseData).map(key => ({
-                ...responseData[key],
+            : Object.keys(response).map(key => ({
+                ...response[key],
                 id: key
               }))
       })
@@ -88,11 +80,10 @@ export const TodoState = ({ children }) => {
       showLoader()
       clearError()
 
-      await fetch(`https://react-hooks-735b2.firebaseio.com/todos/${id}.json`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title })
-      })
+      await Http.patch(
+        `https://react-hooks-735b2.firebaseio.com/todos/${id}.json`,
+        { title }
+      )
 
       dispatch({ type: UPDATE_TODO, id, title })
     } catch (error) {
@@ -116,12 +107,8 @@ export const TodoState = ({ children }) => {
           text: 'Удалить',
           style: 'destructive',
           onPress: async () => {
-            await fetch(
-              `https://react-hooks-735b2.firebaseio.com/todos/${id}.json`,
-              {
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' }
-              }
+            await Http.delete(
+              `https://react-hooks-735b2.firebaseio.com/todos/${id}.json`
             )
             changeScreen(null)
             dispatch({ type: REMOVE_TODO, id })
