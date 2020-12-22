@@ -83,7 +83,26 @@ export const TodoState = ({ children }) => {
     }
   }
 
-  const updateTodo = (id, title) => dispatch({ type: UPDATE_TODO, id, title })
+  const updateTodo = async (id, title) => {
+    try {
+      showLoader()
+      clearError()
+
+      await fetch(`https://react-hooks-735b2.firebaseio.com/todos/${id}.json`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title })
+      })
+
+      dispatch({ type: UPDATE_TODO, id, title })
+    } catch (error) {
+      // console.error(error)
+
+      showError('Что-то пошло не так, попробуйте снова')
+    } finally {
+      hideLoader()
+    }
+  }
 
   const removeTodo = id => {
     const todo = state.todos.find(todo => todo.id === id)
