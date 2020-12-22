@@ -115,7 +115,14 @@ export const TodoState = ({ children }) => {
         {
           text: 'Удалить',
           style: 'destructive',
-          onPress: () => {
+          onPress: async () => {
+            await fetch(
+              `https://react-hooks-735b2.firebaseio.com/todos/${id}.json`,
+              {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' }
+              }
+            )
             changeScreen(null)
             dispatch({ type: REMOVE_TODO, id })
           }
